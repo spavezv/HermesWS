@@ -3,6 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
+
 package hermes.service;
 
 import hermes.Clients;
@@ -27,7 +28,6 @@ import javax.ws.rs.Produces;
 @Stateless
 @Path("hermes.clients")
 public class ClientsFacadeREST extends AbstractFacade<Clients> {
-
     @PersistenceContext(unitName = "HermesWSPU")
     private EntityManager em;
 
@@ -38,8 +38,9 @@ public class ClientsFacadeREST extends AbstractFacade<Clients> {
     @POST
     @Override
     @Consumes({"application/xml", "application/json"})
-    public void create(Clients entity) {
-        super.create(entity);
+    @Produces("text/plain")
+    public String create(Clients entity) {
+        return super.create(entity);
     }
 
     @PUT
@@ -87,7 +88,7 @@ public class ClientsFacadeREST extends AbstractFacade<Clients> {
     protected EntityManager getEntityManager() {
         return em;
     }
-    
+
     @GET
     @Path("authenticate/{email}/{password}")
     @Produces({"application/xml", "application/json"})
@@ -105,4 +106,5 @@ public class ClientsFacadeREST extends AbstractFacade<Clients> {
         System.out.println(c.getEncryptedPassword());
         return c;
     }
+    
 }

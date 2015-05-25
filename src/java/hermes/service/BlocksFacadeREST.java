@@ -37,8 +37,9 @@ public class BlocksFacadeREST extends AbstractFacade<Blocks> {
     @POST
     @Override
     @Consumes({"application/xml", "application/json"})
-    public void create(Blocks entity) {
-        super.create(entity);
+    @Produces("text/plain")
+    public String create(Blocks entity) {
+        return super.create(entity);
     }
 
     @PUT

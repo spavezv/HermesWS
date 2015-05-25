@@ -37,8 +37,9 @@ public class WorkersFacadeREST extends AbstractFacade<Workers> {
     @POST
     @Override
     @Consumes({"application/xml", "application/json"})
-    public void create(Workers entity) {
-        super.create(entity);
+    @Produces("text/plain")
+    public String create(Workers entity) {
+        return  super.create(entity);
     }
 
     @PUT

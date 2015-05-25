@@ -3,7 +3,6 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-
 package hermes.service;
 
 import hermes.Branches;
@@ -27,6 +26,7 @@ import javax.ws.rs.Produces;
 @Stateless
 @Path("hermes.branches")
 public class BranchesFacadeREST extends AbstractFacade<Branches> {
+
     @PersistenceContext(unitName = "HermesWSPU")
     private EntityManager em;
 
@@ -37,8 +37,9 @@ public class BranchesFacadeREST extends AbstractFacade<Branches> {
     @POST
     @Override
     @Consumes({"application/xml", "application/json"})
-    public void create(Branches entity) {
-        super.create(entity);
+    @Produces("text/plain")
+    public String create(Branches entity) {
+        return super.create(entity);
     }
 
     @PUT

@@ -26,8 +26,6 @@ import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlTransient;
-import java.sql.Blob;
-import java.net.InetAddress;
 
 /**
  *
@@ -91,10 +89,10 @@ public class Users implements Serializable {
     private Date lastSignInAt;
     @Lob
     @Column(name = "current_sign_in_ip")
-    private InetAddress currentSignInIp;
+    private String currentSignInIp;
     @Lob
     @Column(name = "last_sign_in_ip")
-    private InetAddress lastSignInIp;
+    private String lastSignInIp;
     @Column(name = "created_at")
     @Temporal(TemporalType.TIMESTAMP)
     private Date createdAt;
@@ -199,19 +197,19 @@ public class Users implements Serializable {
         this.lastSignInAt = lastSignInAt;
     }
 
-    public InetAddress getCurrentSignInIp() {
+    public String getCurrentSignInIp() {
         return currentSignInIp;
     }
 
-    public void setCurrentSignInIp(InetAddress currentSignInIp) {
+    public void setCurrentSignInIp(String currentSignInIp) {
         this.currentSignInIp = currentSignInIp;
     }
 
-    public InetAddress getLastSignInIp() {
+    public String getLastSignInIp() {
         return lastSignInIp;
     }
 
-    public void setLastSignInIp(InetAddress lastSignInIp) {
+    public void setLastSignInIp(String lastSignInIp) {
         this.lastSignInIp = lastSignInIp;
     }
 
