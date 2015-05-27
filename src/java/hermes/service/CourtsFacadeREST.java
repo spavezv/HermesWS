@@ -7,6 +7,7 @@
 package hermes.service;
 
 import hermes.Courts;
+import hermes.JaxbList;
 import java.util.List;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
@@ -19,6 +20,8 @@ import javax.ws.rs.PUT;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
+import javax.ws.rs.core.GenericEntity;
+import javax.ws.rs.core.Response;
 
 /**
  *
@@ -86,6 +89,15 @@ public class CourtsFacadeREST extends AbstractFacade<Courts> {
     @Override
     protected EntityManager getEntityManager() {
         return em;
+    }
+    
+    @GET
+    @Path("/sports")
+    @Produces({"application/xml", "application/json"})
+    public JaxbList  sports() {
+        List<String> list = em.createNamedQuery("Courts.sports").getResultList();
+
+        return new JaxbList(list);
     }
 
 }

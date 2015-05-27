@@ -31,6 +31,9 @@ import javax.xml.bind.annotation.XmlTransient;
 /**
  *
  * @author Sergio Josemar Pavez Vera
+ *     @NamedQuery(name = "Branches.findBySportAndDate", query = "SELECT b FROM Branches b WHERE b.id IN "
+            + "(SELECT DISTINCT c.branchId FROM Courts AS c WHERE c.sport = :sport AND c.id IN "
+            + "(SELECT DISTINCT bl.courtId FROM Blocks AS bl WHERE bl.date = :date))")})
  */
 @Entity
 @Table(name = "branches")
@@ -43,7 +46,8 @@ import javax.xml.bind.annotation.XmlTransient;
     @NamedQuery(name = "Branches.findByStreet", query = "SELECT b FROM Branches b WHERE b.street = :street"),
     @NamedQuery(name = "Branches.findByNumber", query = "SELECT b FROM Branches b WHERE b.number = :number"),
     @NamedQuery(name = "Branches.findByCreatedAt", query = "SELECT b FROM Branches b WHERE b.createdAt = :createdAt"),
-    @NamedQuery(name = "Branches.findByUpdatedAt", query = "SELECT b FROM Branches b WHERE b.updatedAt = :updatedAt")})
+    @NamedQuery(name = "Branches.findByUpdatedAt", query = "SELECT b FROM Branches b WHERE b.updatedAt = :updatedAt"),
+    @NamedQuery(name = "Branches.getBranches", query = "SELECT DISTINCT b FROM Branches AS b, Courts AS c, Blocks AS bl WHERE c.sport = :sport AND bl.date = :date")})
 public class Branches implements Serializable {
     private static final long serialVersionUID = 1L;
     @Id

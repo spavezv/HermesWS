@@ -3,13 +3,13 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-
 package hermes.service;
 
 import hermes.Blocks;
 import java.util.List;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
+import javax.persistence.NoResultException;
 import javax.persistence.PersistenceContext;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.DELETE;
@@ -27,6 +27,7 @@ import javax.ws.rs.Produces;
 @Stateless
 @Path("hermes.blocks")
 public class BlocksFacadeREST extends AbstractFacade<Blocks> {
+
     @PersistenceContext(unitName = "HermesWSPU")
     private EntityManager em;
 
@@ -87,5 +88,25 @@ public class BlocksFacadeREST extends AbstractFacade<Blocks> {
     protected EntityManager getEntityManager() {
         return em;
     }
+
+    @GET
+    @Path("getBlocks/{sport}/{date}/{branch}")
+    @Produces({"application/xml", "application/json"})
+    public List<Blocks> getBlocks(@PathParam("sport") String sport, @PathParam("date") String date, @PathParam("branch") Integer branch) {
+        List<Blocks> blocks;
+        try{
+            blocks = (List<Blocks>) em.createNamedQuery("Blocks.getBlocks")
+                    .setParameter("sport", sport)
+                    .setParameter("date", getDate(date))
+                    .setParameter("branch", branch)
+                    .getResultList();
+            em.flush();
+        } catch (NoResultException e) {
+            blocks = null;
+            System.out.println(e.toString());
+        }
+        return blocks;
+    }
+
 
 }

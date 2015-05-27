@@ -1,4 +1,4 @@
-/*
+    /*
  * To change this license header, choose License Headers in Project Properties.
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
@@ -6,9 +6,12 @@
 package hermes.service;
 
 import hermes.Branches;
+import java.text.DateFormat;
+import java.util.Date;
 import java.util.List;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
+import javax.persistence.NoResultException;
 import javax.persistence.PersistenceContext;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.DELETE;
@@ -86,6 +89,24 @@ public class BranchesFacadeREST extends AbstractFacade<Branches> {
     @Override
     protected EntityManager getEntityManager() {
         return em;
+    }
+    
+    @GET
+    @Path("/getBranches/{sport}/{date}")
+    @Produces({"application/xml", "application/json"})
+    public List<Branches> availableBranches(@PathParam("sport") String sport, @PathParam("date") String date) {
+        List<Branches> branches;
+        try{
+            branches = (List<Branches>) em.createNamedQuery("Branches.getBranches")
+                    .setParameter("sport", sport)
+                    .setParameter("date", getDate(date))
+                    .getResultList();
+            em.flush();
+        } catch (NoResultException e) {
+            branches = null;
+            System.out.println(e.toString());
+        }
+        return branches;
     }
 
 }

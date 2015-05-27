@@ -41,7 +41,8 @@ import javax.xml.bind.annotation.XmlTransient;
     @NamedQuery(name = "Courts.findByName", query = "SELECT c FROM Courts c WHERE c.name = :name"),
     @NamedQuery(name = "Courts.findBySport", query = "SELECT c FROM Courts c WHERE c.sport = :sport"),
     @NamedQuery(name = "Courts.findByCreatedAt", query = "SELECT c FROM Courts c WHERE c.createdAt = :createdAt"),
-    @NamedQuery(name = "Courts.findByUpdatedAt", query = "SELECT c FROM Courts c WHERE c.updatedAt = :updatedAt")})
+    @NamedQuery(name = "Courts.findByUpdatedAt", query = "SELECT c FROM Courts c WHERE c.updatedAt = :updatedAt"),
+    @NamedQuery(name = "Courts.sports", query = "SELECT DISTINCT c.sport FROM Courts c")})
 public class Courts implements Serializable {
     private static final long serialVersionUID = 1L;
     @Id

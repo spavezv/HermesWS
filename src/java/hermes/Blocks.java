@@ -39,7 +39,8 @@ import javax.xml.bind.annotation.XmlRootElement;
     @NamedQuery(name = "Blocks.findByFinish", query = "SELECT b FROM Blocks b WHERE b.finish = :finish"),
     @NamedQuery(name = "Blocks.findByPrice", query = "SELECT b FROM Blocks b WHERE b.price = :price"),
     @NamedQuery(name = "Blocks.findByCreatedAt", query = "SELECT b FROM Blocks b WHERE b.createdAt = :createdAt"),
-    @NamedQuery(name = "Blocks.findByUpdatedAt", query = "SELECT b FROM Blocks b WHERE b.updatedAt = :updatedAt")})
+    @NamedQuery(name = "Blocks.findByUpdatedAt", query = "SELECT b FROM Blocks b WHERE b.updatedAt = :updatedAt"),
+    @NamedQuery(name = "Blocks.getBlocks", query = "SELECT b FROM Blocks AS b, Courts AS c, Branches AS br WHERE b.date = :date AND c.sport = :sport AND br.id = :branch AND b.userId IS NULL")})
 public class Blocks implements Serializable {
     private static final long serialVersionUID = 1L;
     @Id

@@ -3,10 +3,15 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-
 package hermes.service;
 
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.persistence.EntityManager;
 
 /**
@@ -14,6 +19,7 @@ import javax.persistence.EntityManager;
  * @author Sergio Josemar Pavez Vera
  */
 public abstract class AbstractFacade<T> {
+
     private Class<T> entityClass;
 
     public AbstractFacade(Class<T> entityClass) {
@@ -65,6 +71,16 @@ public abstract class AbstractFacade<T> {
         cq.select(getEntityManager().getCriteriaBuilder().count(rt));
         javax.persistence.Query q = getEntityManager().createQuery(cq);
         return ((Long) q.getSingleResult()).intValue();
+    }
+
+    public Date getDate(String sDate) {
+        try {
+            DateFormat df = new SimpleDateFormat("yyyy-MM-dd");
+            return df.parse(sDate);
+        } catch (ParseException ex) {
+            Logger.getLogger(AbstractFacade.class.getName()).log(Level.SEVERE, null, ex);
+            return null;
+        }
     }
 
 }
